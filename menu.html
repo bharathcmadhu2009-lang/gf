@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Menu — gf</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&family=Libre+Baskerville:wght@400;600&display=swap" />
+<style></style>
+</head>
+<body style="margin:0;background:#ffadc2;color:#000000;font-family:'Poppins',sans-serif">
+<div id="forge-loading" style="position:fixed;inset:0;z-index:999;background:#ffadc2;color:#000000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:'Poppins',sans-serif;transition:opacity .6s ease">
+  <div style="font-family:'Playfair Display',serif;font-size:48px;font-weight:700;letter-spacing:1px" id="forge-loading-pct">0%</div>
+  <div style="color:#fef2e1;font-size:14px">Loading…</div>
+  <div style="width:180px;height:2px;background:#1c1712;overflow:hidden;border-radius:2px">
+    <div id="forge-loading-bar" style="height:100%;width:0%;background:#1a1c4c"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var pctEl=document.getElementById('forge-loading-pct'), barEl=document.getElementById('forge-loading-bar'), screenEl=document.getElementById('forge-loading');
+  var start=performance.now(), duration=1400;
+  function tick(now){
+    var t=Math.min(1,(now-start)/duration), pct=Math.round(t*100);
+    pctEl.textContent=pct+'%'; barEl.style.width=pct+'%';
+    if(t<1) requestAnimationFrame(tick);
+    else setTimeout(function(){ screenEl.style.opacity='0'; setTimeout(function(){ screenEl.remove(); }, 650); }, 200);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+<nav style="padding:14px 24px;background:#1c1712">
+  <b style="font-family:'Playfair Display',serif;font-size:20px;margin-right:24px">gf</b>
+  <a href="index.html" style="color:#000000;text-decoration:none;font-weight:600;margin-right:20px">Home</a><a href="menu.html" style="color:#1a1c4c;text-decoration:none;font-weight:600;margin-right:20px">Menu</a><a href="about.html" style="color:#000000;text-decoration:none;font-weight:600;margin-right:20px">About Us</a><a href="gallery.html" style="color:#000000;text-decoration:none;font-weight:600;margin-right:20px">Gallery</a><a href="reviews.html" style="color:#000000;text-decoration:none;font-weight:600;margin-right:20px">Reviews</a><a href="contact.html" style="color:#000000;text-decoration:none;font-weight:600;margin-right:20px">Contact Us</a>
+</nav>
+
+
+</body></html>
