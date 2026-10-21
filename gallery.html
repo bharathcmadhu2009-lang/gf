@@ -3,33 +3,39 @@
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gallery — gf</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Franklin+Gothic+Medium:wght@400;600&family=Newsreader:wght@400;600&family=Libre+Baskerville:wght@400;600&family=Instrument+Serif:wght@400;600&display=swap" />
-<style></style>
+<style>
+@keyframes forge-fade{from{opacity:0}to{opacity:1}}
+@keyframes forge-slide-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes forge-slide-left{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes forge-zoom{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes forge-rotate{from{opacity:0;transform:rotate(-8deg) scale(.95)}to{opacity:1;transform:none}}
+@keyframes forge-blur{from{opacity:0;filter:blur(10px)}to{opacity:1;filter:blur(0)}}
+@keyframes forge-flip{from{opacity:0;transform:rotateX(60deg)}to{opacity:1;transform:none}}
+.forge-anim-load{animation:var(--fa)}
+.forge-anim-scroll{opacity:0}
+.forge-anim-scroll.forge-seen{animation:var(--fa)}
+.forge-anim-hover{transition:transform .25s ease}
+.forge-anim-hover:hover{transform:translateY(-4px) scale(1.02)}
+@media (prefers-reduced-motion: reduce){.forge-anim-load,.forge-anim-scroll{animation:none!important;opacity:1!important}}
+</style>
 </head>
 <body style="margin:0;background:#ffadc2;color:#1d1b1b;font-family:'Newsreader',sans-serif">
-<div id="forge-loading" style="position:fixed;inset:0;z-index:999;background:#ffadc2;color:#1d1b1b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:'Newsreader',sans-serif;transition:opacity .6s ease">
-  <div style="font-family:'Franklin Gothic Medium',serif;font-size:48px;font-weight:700;letter-spacing:1px" id="forge-loading-pct">0%</div>
-  <div style="color:#7c60e2;font-size:14px">Loading…</div>
-  <div style="width:180px;height:2px;background:#4c0b22;overflow:hidden;border-radius:2px">
-    <div id="forge-loading-bar" style="height:100%;width:0%;background:#fe718d"></div>
-  </div>
-</div>
-<script>
-(function(){
-  var pctEl=document.getElementById('forge-loading-pct'), barEl=document.getElementById('forge-loading-bar'), screenEl=document.getElementById('forge-loading');
-  var start=performance.now(), duration=1400;
-  function tick(now){
-    var t=Math.min(1,(now-start)/duration), pct=Math.round(t*100);
-    pctEl.textContent=pct+'%'; barEl.style.width=pct+'%';
-    if(t<1) requestAnimationFrame(tick);
-    else setTimeout(function(){ screenEl.style.opacity='0'; setTimeout(function(){ screenEl.remove(); }, 650); }, 200);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
+
 <nav style="padding:14px 24px;background:#4c0b22">
   <b style="font-family:'Franklin Gothic Medium',serif;font-size:20px;margin-right:24px">gf</b>
   <a href="index.html" style="color:#1d1b1b;text-decoration:none;font-weight:600;margin-right:20px">Home</a><a href="menu.html" style="color:#1d1b1b;text-decoration:none;font-weight:600;margin-right:20px">Menu</a><a href="about.html" style="color:#1d1b1b;text-decoration:none;font-weight:600;margin-right:20px">About Us</a><a href="gallery.html" style="color:#fe718d;text-decoration:none;font-weight:600;margin-right:20px">Gallery</a><a href="reviews.html" style="color:#1d1b1b;text-decoration:none;font-weight:600;margin-right:20px">Reviews</a><a href="contact.html" style="color:#1d1b1b;text-decoration:none;font-weight:600;margin-right:20px">Contact Us</a>
 </nav>
 
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.forge-anim-scroll');
+  if (reduced || !('IntersectionObserver' in window)) { els.forEach(function(el){ el.classList.add('forge-seen'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('forge-seen'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
 
 </body></html>
