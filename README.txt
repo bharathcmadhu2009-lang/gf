@@ -1,1 +1,1 @@
-Exported from Forge Web Factory. Includes desktop, tablet and mobile layouts via CSS media queries, plus any popups and banners you added.
+Exported from Forge Web Factory. Includes desktop, tablet and mobile layouts via CSS media queries, motion effects, stagger timing, popups and banners.
